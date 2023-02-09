@@ -1,0 +1,21 @@
+.search-wrapper{
+    position: relative;
+    width: 80%;
+    margin: 20px 30px;
+    .search{
+        width: 100%;
+        height: 50px;
+        border-radius: 10px;
+        border: 1px solid rgba(0,0,0,.1);
+        padding: 10px 45px;
+        font-size: 16px;
+    }
+    svg{
+        width: 22px;
+        left: 14px;
+        position: absolute;
+        margin: 5px;
+        opacity: .3;
+        top: 9px;
+    }
+}

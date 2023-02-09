@@ -1,12 +1,15 @@
 import { useState } from "react";
 
-function Sort() {
+function Sort({ curentSort, setCurentSort }) {
   const [sortActive, setSortActive] = useState(false);
-  const [curentSort, setCurentSort] = useState(0);
+  
   const sorts = [
-    { title: "популярности" },
-    { title: "цене" },
-    { title: "алфавиту" },
+    { title: "популярности (ASC)", sortProp:"rating" },
+    { title: "популярности (DESC)", sortProp:"-rating" },
+    { title: "цене (ASC)", sortProp:"price" },
+    { title: "цене (DESC)", sortProp:"-price" },
+    { title: "алфавиту (ASC)", sortProp:"title" },
+    { title: "алфавиту (DESC)", sortProp:"-title" },
   ];
   return (
     <div className="sort">
@@ -25,7 +28,7 @@ function Sort() {
         </svg>
         <b>Сортировка по:</b>
         <span onClick={() => setSortActive(!sortActive)}>
-          {sorts[curentSort].title}
+          {curentSort.title}
         </span>
       </div>
       {sortActive && (
@@ -35,10 +38,10 @@ function Sort() {
               <li
                 key={id}
                 onClick={() => {
-                  setCurentSort(id);
+                  setCurentSort(sort);
                   setSortActive(false)
                 }}
-                className={curentSort === id ? "active" : ""}
+                className={curentSort === sort ? "active" : ""}
               >
                 {sort.title}
               </li>

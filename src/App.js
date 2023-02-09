@@ -13,30 +13,51 @@ import { Routes, Route } from "react-router-dom";
 function App() {
   const [pizzas, setPizzas] = useState([]);
   const [fetched, setFeched] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [curentSort, setCurentSort] = useState({
+    title: "популярности (ASC)",
+    sortProp: "rating",
+  });
+  const [searchText, setSearchText] = useState("");
+
+  console.log(curentSort);
 
   useEffect(() => {
     const fetchData = async () => {
+      setFeched(false);
       const res = await axios.get(
-        "https://63d8f4295a330a6ae1717ee5.mockapi.io/items"
+        `https://63d8f4295a330a6ae1717ee5.mockapi.io/items?sortBy=${
+          searchText === "" ? "" : `&title=${searchText}`
+        }&${curentSort.sortProp.replace(
+          "-",
+          ""
+        )}&order=${
+          curentSort.sortProp.includes("-") ? "ask" : "desc"
+        }&category=${activeIndex !== 0 ? activeIndex : ""}`   
       );
       setPizzas(res.data);
       setFeched(true);
+
+      window.scrollTo(0, 0);
     };
     fetchData();
-  }, []);
+  }, [curentSort, activeIndex, searchText]);
   return (
     <div className="wrapper">
       <div className="App">
         <div className="wrapper">
-          <Header />
+          <Header searchText={searchText} setSearchText={setSearchText} />
           <Routes>
             <Route
               path="/"
               element={
                 <Home
-                  Categories={Categories}
                   fetched={fetched}
                   pizzas={pizzas}
+                  activeIndex={activeIndex}
+                  setActiveIndex={setActiveIndex}
+                  curentSort={curentSort}
+                  setCurentSort={setCurentSort}
                 />
               }
             ></Route>
