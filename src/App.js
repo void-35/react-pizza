@@ -20,22 +20,22 @@ function App() {
   });
   const [searchText, setSearchText] = useState("");
 
-  console.log(curentSort);
+  console.log(searchText);
 
   useEffect(() => {
     const fetchData = async () => {
       setFeched(false);
       const res = await axios.get(
-        `https://63d8f4295a330a6ae1717ee5.mockapi.io/items?sortBy=${
-          searchText === "" ? "" : `&title=${searchText}`
-        }&${curentSort.sortProp.replace(
+        `https://63d8f4295a330a6ae1717ee5.mockapi.io/items?sortBy=${curentSort.sortProp.replace(
           "-",
           ""
         )}&order=${
           curentSort.sortProp.includes("-") ? "ask" : "desc"
-        }&category=${activeIndex !== 0 ? activeIndex : ""}`   
+        }&category=${activeIndex !== 0 ? activeIndex : ""
+        }`
       );
-      setPizzas(res.data);
+      console.log()
+      setPizzas(res.data.filter((obj) => obj.title.toLowerCase().includes(searchText.toLowerCase())));
       setFeched(true);
 
       window.scrollTo(0, 0);
