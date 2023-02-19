@@ -6,7 +6,6 @@ function Card({ imageUrl, title, types, sizes, price, category, rating, itemId, 
   const [activeIndexOfSize, setActiveIndexOfSize] = useState(0);
   const [activeIndexOfType, setActiveIndexOfType] = useState(0);
   const cartPizzas = useSelector(state => state.cards.value)
-  console.log(cartPizzas)
 
   const object = cartPizzas.find((obj)=>obj.itemId==itemId)
   const count = object ? object.count : 0

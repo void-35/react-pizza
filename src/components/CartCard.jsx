@@ -1,12 +1,16 @@
+import { useDispatch } from "react-redux";
+import { countDecrement, countIncrement, deleteCartObject } from "../Redux/slices/cartSlice";
+
 function CartCard({
     title,
-    price,
     imageUrl,
     activeIndexOfSize,
     activeIndexOfType,
     count,
+    price,
 }) {
     const sizes = ['26', '30', '40']
+    const dispatch = useDispatch()
     return (
         <div className="cart__item">
             {console.log(imageUrl)}
@@ -25,7 +29,7 @@ function CartCard({
                 </p>
             </div>
             <div className="cart__item-count">
-                <div className="button button--outline button--circle cart__item-count-minus">
+                <div onClick={() => dispatch(countDecrement({imageUrl, price}))} className="button button--outline button--circle cart__item-count-minus">
                     <svg
                         width="10"
                         height="10"
@@ -44,7 +48,7 @@ function CartCard({
                     </svg>
                 </div>
                 <b>{count}</b>
-                <div className="button button--outline button--circle cart__item-count-plus">
+                <div onClick={() => dispatch(countIncrement({imageUrl, price}))} className="button button--outline button--circle cart__item-count-plus">
                     <svg
                         width="10"
                         height="10"
@@ -64,10 +68,10 @@ function CartCard({
                 </div>
             </div>
             <div className="cart__item-price">
-                <b>{price} ₽</b>
+                <b>{price*count} ₽</b>
             </div>
             <div className="cart__item-remove">
-                <div className="button button--outline button--circle">
+                <div onClick={()=>dispatch(deleteCartObject({imageUrl, price, count}))} className="button button--outline button--circle">
                     <svg
                         width="10"
                         height="10"

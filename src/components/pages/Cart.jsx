@@ -1,9 +1,14 @@
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { cleanCart } from "../../Redux/slices/cartSlice";
 import CartCard from "../CartCard";
 
 const Cart = () => {
     const cards = useSelector((state) => state.cards.value);
+    const pizzaCount = useSelector((state) => state.cards.pizzaCount);
+    const totalPrice = useSelector((state)=>state.cards.totalPrice)
+    const dispatch = useDispatch()
     return (
         <div className="container container--cart">
             <div className="cart">
@@ -40,7 +45,7 @@ const Cart = () => {
                         </svg>
                         Корзина
                     </h2>
-                    <div className="cart__clear">
+                    <div onClick={()=>dispatch(cleanCart())} className="cart__clear">
                         <svg
                             width="20"
                             height="20"
@@ -77,13 +82,13 @@ const Cart = () => {
                                 strokeLinejoin="round"
                             />
                         </svg>
-
                         <span>Очистить корзину</span>
                     </div>
                 </div>
                 <div className="content__items">
-                    {cards.map((cart) => (
+                    {cards.map((cart, id) => (
                         <CartCard
+                            key={id}
                             title={cart.title}
                             price={cart.price}
                             imageUrl={cart.imageUrl}
@@ -97,11 +102,11 @@ const Cart = () => {
                     <div className="cart__bottom-details">
                         <span>
                             {" "}
-                            Всего пицц: <b>3 шт.</b>{" "}
+                            Всего пицц: <b>{pizzaCount} шт.</b>{" "}
                         </span>
                         <span>
                             {" "}
-                            Сумма заказа: <b>900 ₽</b>{" "}
+                            Сумма заказа: <b>{totalPrice} ₽</b>{" "}
                         </span>
                     </div>
                     <div className="cart__bottom-buttons">
