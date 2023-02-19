@@ -1,0 +1,28 @@
+.root{
+    margin: 0 0 0 5%;
+    li{
+        display: inline-block;
+        
+        a{
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            margin: 0 10px 0 0;
+            border-radius: 30px;
+            color: #fe5f1e;
+            border: 1px solid #fe5f1e;
+            line-height: 45px;
+            text-align: center;
+            &:hover{
+                background-color: #fe5f1e;
+                color: white;
+            }
+        }
+    }
+    .selected{
+        a{
+            background-color: #fe5f1e;
+            color: white;
+        }
+    }
+}

@@ -1,9 +1,16 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../Redux/slices/cartSlice";
 
-function Card({ imageUrl, title, types, sizes, price, category, rating }) {
+function Card({ imageUrl, title, types, sizes, price, category, rating, itemId, pizzas }) {
   const [activeIndexOfSize, setActiveIndexOfSize] = useState(0);
   const [activeIndexOfType, setActiveIndexOfType] = useState(0);
+  const cartPizzas = useSelector(state => state.cards.value)
+  console.log(cartPizzas)
 
+  const object = cartPizzas.find((obj)=>obj.itemId==itemId)
+  const count = object ? object.count : 0
+  const dispatch = useDispatch()
   return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
@@ -11,22 +18,22 @@ function Card({ imageUrl, title, types, sizes, price, category, rating }) {
         <h4 className="pizza-block__title">{title}</h4>
         <div className="pizza-block__selector">
           <ul>
-            {types.map((type, id) => (
+            {types.map((type, itemId) => (
               <li
-                key={id}
-                onClick={() => setActiveIndexOfType(id)}
-                className={activeIndexOfType === id ? "active" : ""}
+                key={itemId}
+                onClick={() => setActiveIndexOfType(itemId)}
+                className={activeIndexOfType === itemId ? "active" : ""}
               >
                 {type === 0 ? "тонкая" : "традиционная"}
               </li>
             ))}
           </ul>
           <ul>
-            {sizes.map((size, id) => (
+            {sizes.map((size, itemId) => (
               <li
-                key={id}
-                onClick={() => setActiveIndexOfSize(id)}
-                className={activeIndexOfSize === id ? "active" : ""}
+                key={itemId}
+                onClick={() => setActiveIndexOfSize(itemId)}
+                className={activeIndexOfSize === itemId ? "active" : ""}
               >
                 {size}
               </li>
@@ -35,7 +42,7 @@ function Card({ imageUrl, title, types, sizes, price, category, rating }) {
         </div>
         <div className="pizza-block__bottom">
           <div className="pizza-block__price">от {price} ₽</div>
-          <div className="button button--outline button--add">
+          <div onClick={() => dispatch(addToCart({imageUrl, title, activeIndexOfSize, activeIndexOfType, price, itemId }))} className="button button--outline button--add">
             <svg
               width="12"
               height="12"
@@ -49,7 +56,7 @@ function Card({ imageUrl, title, types, sizes, price, category, rating }) {
               />
             </svg>
             <span>Добавить</span>
-            <i>0</i>
+            <i>{count}</i>
           </div>
         </div>
       </div>

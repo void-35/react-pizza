@@ -1,7 +1,9 @@
 .search-wrapper{
     position: relative;
+    display: grid;
     width: 80%;
     margin: 20px 30px;
+    
     .search{
         width: 100%;
         height: 50px;
@@ -9,6 +11,12 @@
         border: 1px solid rgba(0,0,0,.1);
         padding: 10px 45px;
         font-size: 16px;
+        &:focus{
+            border: 1px solid rgba(0,0,0,.3);
+            svg{
+                opacity: 0.4;
+            }
+        }
     }
     svg{
         width: 22px;
@@ -17,5 +25,17 @@
         margin: 5px;
         opacity: .3;
         top: 9px;
+    }
+    .search-close{
+        width: 22px;
+        position: absolute;
+        justify-self: flex-end;
+        margin: 5px;
+        margin-right: 10px;
+        opacity: .3;
+        top: 9px;
+        &:hover{
+            opacity: 0.5;
+        }
     }
 }

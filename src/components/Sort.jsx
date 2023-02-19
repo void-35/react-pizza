@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { onChangeSort, openSort } from "../Redux/slices/sortSlice";
 
-function Sort({ curentSort, setCurentSort }) {
-  const [sortActive, setSortActive] = useState(false);
-  
+function Sort() {
+  const dispatch = useDispatch()
+  const sortActive = useSelector(state => state.sort.value.activeIndex);
+  const curentSort = useSelector(state=>state.sort.value.sort)
   const sorts = [
     { title: "популярности (ASC)", sortProp:"rating" },
     { title: "популярности (DESC)", sortProp:"-rating" },
@@ -27,7 +30,7 @@ function Sort({ curentSort, setCurentSort }) {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setSortActive(!sortActive)}>
+        <span onClick={() => dispatch(openSort(!sortActive))}>
           {curentSort.title}
         </span>
       </div>
@@ -38,8 +41,8 @@ function Sort({ curentSort, setCurentSort }) {
               <li
                 key={id}
                 onClick={() => {
-                  setCurentSort(sort);
-                  setSortActive(false)
+                  dispatch(onChangeSort(sort));
+                  dispatch(openSort(false))
                 }}
                 className={curentSort === sort ? "active" : ""}
               >

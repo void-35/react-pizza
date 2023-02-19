@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { onChangeFilter } from "../Redux/slices/filterSlice";
 
-function Categories({ activeIndex, setActiveIndex}) {
-  
+function Categories() {
+  const filter = useSelector(state => state.filter.value)
+  const dispatch = useDispatch()
   const items=[
     'все',
     'мясные',
@@ -14,7 +17,7 @@ function Categories({ activeIndex, setActiveIndex}) {
     <div className="categories">
       <ul>
         {items.map((item, id)=>(
-          <li key={id} onClick={()=>setActiveIndex(id)}  className={activeIndex === id ? "active" : ""}>{item}</li>
+          <li key={id} onClick={()=>dispatch(onChangeFilter(id))}  className={filter === id ? "active" : ""}>{item}</li>
         ))}
       </ul>
     </div>
